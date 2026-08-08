@@ -65,12 +65,26 @@ cat /sys/class/dmi/id/board_name
 ```
 
 If it's not in `ec-modern-standby-fix.sh`, the installer will warn you
-and the hook will safely do nothing on your hardware. See
-[docs/DIAGNOSIS.md](docs/DIAGNOSIS.md) for how to independently derive
-and contribute your own board's values — **do not** copy another
-board's offsets into your own config; these are undocumented,
+and the hook will safely do nothing on your hardware. **Do not** copy
+another board's offsets into your own config — these are undocumented,
 vendor-specific EC addresses and the same offset can mean something
-completely different on different firmware.
+completely different on different firmware. Instead, use
+[`find-my-values.sh`](find-my-values.sh), a guided helper that automates
+the tedious parts of finding your own board's values (collecting
+samples, filtering real signal from sensor/counter noise, safely testing
+candidates) — see [docs/DIAGNOSIS.md](docs/DIAGNOSIS.md) for the full
+walkthrough and the reasoning behind each step. It can't do the physical
+part for you (you still have to actually reboot and actually confirm
+suspend behavior with your own eyes), but everything else is one
+command each:
+
+```
+./find-my-values.sh collect broken     # after confirming suspend is broken
+./find-my-values.sh collect working    # after confirming suspend works
+# repeat each 1-2 more times via fresh independent reboots, then:
+./find-my-values.sh analyze
+./find-my-values.sh test-candidate 0xNN <hex-bytes>   # confirms causality live, no reboot
+```
 
 ## Safety
 

@@ -1,5 +1,12 @@
 # Finding your own board's values
 
+**Quick path:** [`find-my-values.sh`](../find-my-values.sh) automates
+everything below except the physical reboots and confirming suspend
+behavior yourself — `collect broken`/`collect working` to gather
+samples, `analyze` to find real candidates, `test-candidate` to safely
+test one live. This document explains the reasoning behind each step
+in full, whether you use the script or do it by hand.
+
 **Do not copy another board's offsets/values into your own config.**
 These are raw, undocumented EC RAM addresses. The same offset can hold
 something completely different — a battery calibration value, a fan
@@ -37,6 +44,7 @@ the same bug — don't assume this methodology applies.
 sudo apt install acpica-tools   # for reference; not required for this specific method
 sudo modprobe ec_sys            # read-only by default — safe
 ls /sys/kernel/debug/ec/ec0/io  # should exist; if not, your EC isn't exposed this way
+python3 --version               # needed for find-my-values.sh analyze
 ```
 
 ## Method: diff EC RAM across controlled known-good/known-broken states
