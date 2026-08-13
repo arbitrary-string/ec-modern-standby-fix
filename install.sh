@@ -4,13 +4,16 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BOARD="$(cat /sys/class/dmi/id/board_name 2>/dev/null || echo unknown)"
-KNOWN_BOARDS="L55xJNP_N_Mx"
+KNOWN_BOARDS=(
+    "L55xJNP_N_Mx"
+    "X56xWNx"
+)
 
 echo "Detected board: $BOARD"
 echo
 
 SUPPORTED=0
-for b in $KNOWN_BOARDS; do
+for b in "${KNOWN_BOARDS[@]}"; do
 	[ "$b" = "$BOARD" ] && SUPPORTED=1
 done
 

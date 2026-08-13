@@ -51,14 +51,23 @@ cd ec-modern-standby-fix
 ./install.sh
 ```
 
-Requires the `ec_sys` kernel module (standard, in-tree on any modern
-Linux kernel) and `dd`/`printf` (present on any system already).
+Requires:
+
+- The `ec_sys` kernel module (standard, in-tree on any modern
+Linux kernel. May need  `options ec_sys write_support=1` in
+`/etc/modprobe.d/ec_sys.conf`)
+- `dd`/`printf` (present on any system already).
 
 To remove: `./uninstall.sh`.
 
 ## Is your board supported?
 
-Currently: `L55xJNP_N_Mx` only. Check yours:
+Currently:
+
+- `L55xJNP_N_Mx`
+- `X56xWNx`, a locally branded Clevo X560WNx-G(-S) Series
+
+Check yours:
 
 ```
 cat /sys/class/dmi/id/board_name
