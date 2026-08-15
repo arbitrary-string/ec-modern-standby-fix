@@ -5,8 +5,8 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BOARD="$(cat /sys/class/dmi/id/board_name 2>/dev/null || echo unknown)"
 KNOWN_BOARDS=(
-    "L55xJNP_N_Mx"
-    "X56xWNx"
+	"L55xJNP_N_Mx"
+	"X56xWNx"
 )
 
 echo "Detected board: $BOARD"
@@ -20,7 +20,7 @@ done
 if [ "$SUPPORTED" = 1 ]; then
 	echo "This board is in the known-supported list."
 else
-	echo "WARNING: '$BOARD' is not in the known-supported board list ($KNOWN_BOARDS)."
+	echo "WARNING: '$BOARD' is not in the known-supported board list (${KNOWN_BOARDS[*]})."
 	echo "The hook will still install, but it only ever writes EC RAM for boards"
 	echo "explicitly listed in ec-modern-standby-fix.sh — it will do nothing at all"
 	echo "on unrecognized hardware like yours, so installing it now is safe but"

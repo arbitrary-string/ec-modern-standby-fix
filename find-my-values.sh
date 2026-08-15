@@ -140,10 +140,10 @@ cmd_test_candidate() {
 	esac
 
 	sudo modprobe ec_sys write_support=1
-    if [ $(cat /sys/module/ec_sys/parameters/write_support) != "Y" ]; then
-        echo FATAL: Can\'t enable ec_sys kernel module write support
-        exit 1
-    fi
+	if [ "$(cat /sys/module/ec_sys/parameters/write_support)" != "Y" ]; then
+		echo "FATAL: can't enable ec_sys kernel module write support"
+		exit 1
+	fi
 
 	echo "Before:"
 	sudo xxd -s "$offset" -l 16 /sys/kernel/debug/ec/ec0/io
