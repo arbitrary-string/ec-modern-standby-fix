@@ -37,7 +37,7 @@ BOARD="$(cat /sys/class/dmi/id/board_name 2>/dev/null || true)"
 # here only after independently confirming your own offsets/values per
 # docs/DIAGNOSIS.md — do not copy another board's values.
 case "$BOARD" in
-	L55xJNP_N_Mx)
+	L55xJNP_N_Mx | X56xWNx)
 		modprobe ec_sys write_support=1
 		printf '\x01\x0b\x70' | dd of=/sys/kernel/debug/ec/ec0/io bs=1 seek=160 count=3 conv=notrunc 2>/dev/null
 		printf '\xe0'         | dd of=/sys/kernel/debug/ec/ec0/io bs=1 seek=235 count=1 conv=notrunc 2>/dev/null
